@@ -41,9 +41,6 @@ public class CreateServlet extends HttpServlet {
 
             Task t = new Task();
 
-            String title = request.getParameter("title");
-            t.setTitle(title);
-
             String content = request.getParameter("content");
             t.setContent(content);
 
@@ -61,6 +58,7 @@ public class CreateServlet extends HttpServlet {
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
                 rd.forward(request, response);
+
             }else {
                 em.getTransaction().begin();
                 em.persist(t);
@@ -71,15 +69,6 @@ public class CreateServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/index");
             }
 
-
-
-            em.getTransaction().begin();
-            em.persist(t);
-            em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "登録が完了しました。");
-            em.close();
-
-            response.sendRedirect(request.getContextPath() + "/index");
         }
     }
 }
